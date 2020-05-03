@@ -1,0 +1,20 @@
+private void Button7_Click(object sender, EventArgs e)
+        {
+
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+            int a;
+            Color k;
+            for (int x = 0; x < szer; x++)
+            {
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+
+                    a = (int)(0.3 * k.R + 0.59 * k.G + 0.11 * k.B)/3;
+                    k = Color.FromArgb(a, a, a);
+                    b2.SetPixel(x, y, k);
+                }
+            }
+            pictureBox2.Refresh();
+        }

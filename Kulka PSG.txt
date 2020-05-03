@@ -1,0 +1,83 @@
+//KLASA KULKA:
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApp6
+{
+    class Kulka
+    {
+        public int r;
+        public int x;
+        public int y;
+        public Kulka(int rr,int xx,int yy) //konstruktor klasy kulka
+        {
+            r = rr;
+            x = xx;
+            y = yy;
+        }
+        
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp6
+{
+    public partial class Form1 : Form
+    {
+        int r = 30;
+        int x = 50;
+        int y = 150;
+        public int przesuniecieX = 5;
+        public int przesuniecieY = 5;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Kulka kolka = new Kulka(30,50,150);
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Graphics grafika = this.CreateGraphics();
+            Pen p = new Pen(Color.Black, r); // narzeddzie do rysowania kulki
+            grafika.Clear(Color.Green); // kolor dla okna
+            grafika.DrawEllipse(p, x, y, r, r); // utworzenie kulki
+
+            x = x + przesuniecieX; // poruszanie kulki
+            if (x <= r || x >= 780 - r) // odbicie kulki od krawedzi
+            {
+                przesuniecieX = -przesuniecieX;
+            }
+
+            y = y + przesuniecieY;
+            if (y <= r || y >= 440 - r)
+            {
+                przesuniecieY = -przesuniecieY;
+            }
+        }
+    }
+    
+}
+
+
+
+
+
+

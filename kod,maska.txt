@@ -1,0 +1,59 @@
+private void button6_Click(object sender, EventArgs e)
+        {
+            int m1 = (int)numericUpDown1.Value;
+            int m2 = (int)numericUpDown2.Value;
+            int m3 = (int)numericUpDown3.Value;
+            int m4 = (int)numericUpDown4.Value;
+            int m5 = (int)numericUpDown5.Value;
+            int m6 = (int)numericUpDown6.Value;
+            int m7 = (int)numericUpDown7.Value;
+            int m8 = (int)numericUpDown8.Value;
+            int m9 = (int)numericUpDown9.Value;
+            int suma = m1 + m2 + m3 + m4 + m5 + m6 + m7 + m8 + m9;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+            Color k1, k2, k3, k4, k5, k6, k7, k8, k9;
+            int r, g, b;
+            for (int x = 1; x < szer - 1; x++)
+            {
+
+                for (int y = 1; y < wys - 1; y++)
+                {
+                    k1 = b1.GetPixel(x - 1, y + 1);
+                    k2 = b1.GetPixel(x, y + 1);
+                    k3 = b1.GetPixel(x + 1, y + 1);
+                    k4 = b1.GetPixel(x - 1, y);
+                    k5 = b1.GetPixel(x, y);
+                    k6 = b1.GetPixel(x + 1, y);
+                    k7 = b1.GetPixel(x - 1, y - 1);
+                    k8 = b1.GetPixel(x, y - 1);
+                    k9 = b1.GetPixel(x + 1, y - 1);
+                    r = k1.R * m1 + k2.R * m2 + k3.R * m3 + k4.R * m4 + k5.R * m5 + k6.R * m6 + k7.R * m7
+                        + k8.R * m8 + k9.R * m9;
+                    g = k1.G * m1 + k2.G * m2 + k3.G * m3 + k4.G * m4 + k5.G * m5 + k6.G * m6 + k7.G * m7
+                        + k8.G * m8 + k9.G * m9;
+                    b = k1.B * m1 + k2.B * m2 + k3.B * m3 + k4.B * m4 + k5.B * m5 + k6.B * m6 + k7.B * m7
+                        + k8.B * m8 + k9.B * m9;
+
+                    if (suma != 0)
+                        r = r / suma;
+                    if (suma != 0)
+                        g = g / suma;
+                    if (suma != 0)
+                        b = b / suma;
+
+                    if (r > 255) r = 255;
+                    if (r < 0) r = 0;
+
+                    if (g > 255) g = 255;
+                    if (g < 0) g = 0;
+
+                    if (b > 255) b = 255;
+                    if (b < 0) b = 0;
+
+                    b2.SetPixel(x, y, Color.FromArgb(r, g, b));
+                }
+            }
+            pictureBox2.Refresh();
+        }

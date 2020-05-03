@@ -1,0 +1,28 @@
+ private void button9_Click(object sender, EventArgs e)
+        {
+            Color k;
+            int a;
+            int prog1, prog2;
+            prog1 = 80;
+            prog2 = 160;
+            Bitmap b1 = (Bitmap)pictureBox1.Image;
+            Bitmap b2 = (Bitmap)pictureBox2.Image;
+
+            for (int x = 0; x < szer; x++)
+            {
+
+                for (int y = 0; y < wys; y++)
+                {
+                    k = b1.GetPixel(x, y);
+                    a = (k.R + k.G + k.B) / 3;
+                    if (a < prog1) k = Color.Black;
+                    else if (a < prog2) k = Color.Gray;
+                    else k = Color.White;
+
+                    b2.SetPixel(x, y, k);
+                }
+
+            }
+
+            pictureBox2.Refresh();
+        }
