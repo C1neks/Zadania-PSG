@@ -1,0 +1,158 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Kształty
+{
+
+
+
+    public partial class Form1 : Form
+    {
+
+
+        private List<Figura> figura = new List<Figura>();
+        public Form1()
+
+        {
+
+            
+            figura.Add(new Prostokat(100, 100, -4, 3, 30, Color.Gray));
+            figura.Add(new Prostokat(100, 100, 5, 10, 20, Color.Blue));
+            figura.Add(new Kulka(100, 100, 2, 2, 50, Color.Pink));
+            figura.Add(new Kwadrat(100, 100, -2, -2, 30, Color.Red));
+            figura.Add(new Kwadrat(100, 100, 4, 4, 20, Color.Brown));
+            figura.Add(new Kulka(100, 100, -3, -3, 20, Color.Black));
+            figura.Add(new Prostokat(100, 100, -2, 1, 15, Color.AliceBlue));
+            figura.Add(new Kulka(100, 100, -1, -1, 25, Color.Firebrick));
+            figura.Add(new Kwadrat(100, 100, -6, -6, 20, Color.DarkCyan));
+            InitializeComponent();
+
+
+        }
+
+
+
+        abstract class Figura
+        {
+            protected int x, y, vx, vy, r;
+            protected SolidBrush b;
+
+            public Figura(int ax, int ay, int avx, int avy, int ar, Color ak)
+            {
+                x = ax;
+                y = ay;
+                vx = avx;
+                vy = avy;
+                r = ar;
+                b = new SolidBrush(ak);
+            }
+            abstract public void rysuj(Graphics g); 
+
+            public void porusz(int szer, int wys)  // PORUSZANIE FIGUR
+            {
+                x += vx;
+                if (x >= szer - r || x <= r)
+                    vx = -vx;
+                y += vy;
+                if (y >= wys - r || y <= r)
+                    vy = -vy;
+            }
+        }
+
+        class Kulka : Figura
+        {
+            public Kulka(int ax, int ay, int avx, int avy, int ar, Color ak) : base(ax, ay, avx, avy, ar, ak)
+            {
+            }
+            override
+            public void rysuj(Graphics g)
+            {
+                g.FillEllipse(b, x - r, y - r, 2 * r, 2 * r);
+            }
+        }
+
+        class Kwadrat : Figura
+        {
+            public Kwadrat(int ax, int ay, int avx, int avy, int ar, Color ak) : base(ax, ay, avx, avy, ar, ak)
+            {
+            }
+            override
+            public void rysuj(Graphics g)
+            {
+                g.FillRectangle(b, x - r, y - r, 2 * r, 2 * r);
+            }
+        }
+
+
+        class Prostokat : Figura
+        {
+            public Prostokat(int ax, int ay, int avx, int avy, int ar, Color ak) : base(ax, ay, avx, avy, ar, ak)
+            {
+            }
+            override
+            public void rysuj(Graphics g)
+            {
+                g.FillRectangle(b, x - r, y - r, 5 * r, 2 * r);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e) // start
+        {
+            timer1.Start();
+        }
+
+        private void button2_Click(object sender, EventArgs e) // stop
+        {
+            timer1.Stop();
+        }
+
+        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            foreach (Figura f in figura)
+                f.porusz(panel1.Width, panel1.Height);
+
+            panel1.Invalidate();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            foreach (Figura f in figura)
+            {
+                f.rysuj(e.Graphics);
+            }
+        }
+    }
+
+    public class MojPanel : Panel
+    {
+        public MojPanel()
+        {
+            DoubleBuffered = true;
+        }
+
+
+    }
+
+}
